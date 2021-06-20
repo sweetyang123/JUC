@@ -1,6 +1,7 @@
-package com.thread;
+package com.threadinterrupt;
 
 import java.util.concurrent.TimeUnit;
+//同步代码块synchronized中interrupt也不能抢到执行权，interrupt只是修改标志位
 
 public class Interrupt_synchronized {
     static Object o=new Object();
