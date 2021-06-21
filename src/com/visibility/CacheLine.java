@@ -7,6 +7,7 @@ import java.util.concurrent.CountDownLatch;
 public class CacheLine {
     private static long count=10_0000_0000L;
     private static class T{
+        //增加无用变量是为了填充64个字节，提高效率
 //        private long p1,p2,p3,p4,p5,p6,p7;
         //需在run的VM options中加参数：-XX:-RestrictContended；只有1.8支持
         @Contended
