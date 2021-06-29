@@ -15,7 +15,6 @@ public class ThreadPoolExecutorDemo02 {
             @Override
             public Thread newThread(Runnable r) {
                 Thread thread = new Thread(r);
-                //
                 thread.setDaemon(true);
                 return thread;
             }
@@ -30,6 +29,7 @@ public class ThreadPoolExecutorDemo02 {
             userList.add(1);
             System.out.println("exit");
         });
+//        加入shutdown时userList里才有值
         threadPoolExecutor.shutdown();
         threadPoolExecutor.awaitTermination(1,TimeUnit.MINUTES);
         return userList;
