@@ -4,51 +4,33 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * 可替代synchronized，是CAS实现，一样的可重入,y需要手动解锁
+ * 可替代synchronized，是CAS实现，一样的可重入,但需要手动解锁
  * 有trylock，看能否上锁；
  * 调用lockInterruptibly可以对线程interrupt方法做出响应
  * 公平锁
  */
-public class ReenTrantLock03 {
-
-    public static void main(String[] args) {
-        Lock lock = new ReentrantLock();
-      Thread t1= new Thread(()->{
+public class ReenTrantLock03 extends Thread{
+    //为true时为公平锁，在队列中排队，有时会先输出多个t1，这种可能是t2还没进队列
+    Lock lock = new ReentrantLock(true);
+    @Override
+    public void run() {
+        for (int i = 0; i <100 ; i++) {
             try {
-                System.out.println("t1 start");
                 lock.lock();
-                Thread.sleep(Integer.MAX_VALUE);
-                System.out.println("t1 end");
-            }catch (InterruptedException e) {
-                e.printStackTrace();
-                System.out.println("interrupt");
-            }finally {
-                lock.unlock();
-            }
-
-        });
-      t1.start();
-
-      Thread t2=new Thread(()->{
-            try {
-                System.out.println("t2 start");
-                lock.lockInterruptibly();
+                System.out.println(Thread.currentThread().getName()+"------start");
                 Thread.sleep(1000);
-                System.out.println("t2 end");
-            }catch (InterruptedException e) {
+            } catch (InterruptedException e) {
                 e.printStackTrace();
-                System.out.println("interrupt");
             }finally {
                 lock.unlock();
             }
-        });
-      t2.start();
-      //过1s再打断
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
-        t2.interrupt();
+    }
+    public static void main(String[] args) {
+        ReenTrantLock03 lock03 = new ReenTrantLock03();
+        Thread t1=new Thread(lock03);
+        Thread t2=new Thread(lock03);
+        t1.start();
+        t2.start();
     }
 }
