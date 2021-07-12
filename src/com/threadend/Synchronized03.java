@@ -1,9 +1,4 @@
 package com.threadend;
-
-import sun.misc.Unsafe;
-
-import java.util.concurrent.atomic.AtomicInteger;
-
 /**
  * 程序在执行过程中，如果出现异常，默认情况锁会被释放
  * 所以，在并发处理的过程中，有异常要多加小心，不然可能会发生不一致的情况。
