@@ -1,5 +1,6 @@
 package com.class04;
 
+import java.util.WeakHashMap;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class TestLock {
